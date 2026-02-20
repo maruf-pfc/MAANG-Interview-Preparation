@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Logo" width="80"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png" alt="C# Logo" width="80"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png" alt="C# Logo" width="90"/>
   <h1>MAANG Interview Prep in C++ & C#</h1>
   <p><strong>A highly detailed, Open-Source Interactive Notebook Curriculum for cracking Meta, Amazon, Apple, Netflix, and Google.</strong></p>
 
