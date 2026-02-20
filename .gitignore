@@ -1,0 +1,32 @@
+# C++ Build Artifacts
+*.o
+*.out
+*.exe
+a.out
+build/
+bin/
+.cache/
+
+# Compiled objects
+*.obj
+*.elf
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+*.vcxproj*
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.log
+node_modules/

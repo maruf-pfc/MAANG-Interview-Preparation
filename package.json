@@ -1,0 +1,25 @@
+{
+  "name": "maang-interview-preparation",
+  "version": "1.0.0",
+  "description": "Welcome to the **MAANG Interview Prep** repository. This is a comprehensive, open-source guide designed to prepare you for coding interviews at Meta, Amazon, Apple, Netflix, and Google.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./test_all.sh",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maruf-pfc/MAANG-Interview-Preparation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/maruf-pfc/MAANG-Interview-Preparation/issues"
+  },
+  "homepage": "https://github.com/maruf-pfc/MAANG-Interview-Preparation#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
