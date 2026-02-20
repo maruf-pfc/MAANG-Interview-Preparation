@@ -129,8 +129,10 @@ return results
 ## 11.6 Subsets — Implementation
 **Code it yourself · 8 min**
 
-See full solution: [`subsets.cpp`](subsets.cpp)
+### ✅ C++ & C# Solutions
+See [`subsets.cpp`](subsets.cpp) | [`subsets.cs`](subsets.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -152,7 +154,38 @@ private:
 };
 ```
 
-**Compile & run:**
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public IList<IList<int>> Subsets(int[] nums) {
+        var result = new List<IList<int>>();
+        var subset = new List<int>();
+        
+        Backtrack(nums, 0, subset, result);
+        
+        return result;
+    }
+    
+    private void Backtrack(int[] nums, int i, List<int> subset, IList<IList<int>> result) {
+        if (i == nums.Length) {
+            result.Add(new List<int>(subset));
+            return;
+        }
+        
+        // Include nums[i]
+        subset.Add(nums[i]);
+        Backtrack(nums, i + 1, subset, result);
+        
+        // Exclude nums[i]
+        subset.RemoveAt(subset.Count - 1);
+        Backtrack(nums, i + 1, subset, result);
+    }
+}
+```
+
+**Compile & run (C++):**
 ```bash
 g++ -std=c++17 subsets.cpp && ./a.out
 ```
@@ -236,8 +269,10 @@ function backtrack(path, used):
 ## 11.12 Permutations — Implementation
 **Code it yourself · 8 min**
 
-See full solution: [`permutations.cpp`](permutations.cpp)
+### ✅ C++ & C# Solutions
+See [`permutations.cpp`](permutations.cpp) | [`permutations.cs`](permutations.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -266,6 +301,42 @@ private:
         }
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public IList<IList<int>> Permute(int[] nums) {
+        var result = new List<IList<int>>();
+        var currentPermutation = new List<int>();
+        var used = new bool[nums.Length];
+        
+        Backtrack(nums, used, currentPermutation, result);
+        
+        return result;
+    }
+    
+    private void Backtrack(int[] nums, bool[] used, List<int> currentPermutation, IList<IList<int>> result) {
+        if (currentPermutation.Count == nums.Length) {
+            result.Add(new List<int>(currentPermutation));
+            return;
+        }
+        
+        for (int i = 0; i < nums.Length; i++) {
+            if (used[i]) continue;
+            
+            used[i] = true;
+            currentPermutation.Add(nums[i]);
+            
+            Backtrack(nums, used, currentPermutation, result);
+            
+            currentPermutation.RemoveAt(currentPermutation.Count - 1);
+            used[i] = false;
+        }
+    }
+}
 ```
 
 | | Complexity |
@@ -345,8 +416,10 @@ function dfs(start, target, path):
 ## 11.18 Combination Sum — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`combination_sum.cpp`](combination_sum.cpp)
+### ✅ C++ & C# Solutions
+See [`combination_sum.cpp`](combination_sum.cpp) | [`combination_sum.cs`](combination_sum.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -371,6 +444,41 @@ private:
         }
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public IList<IList<int>> CombinationSum(int[] candidates, int target) {
+        var result = new List<IList<int>>();
+        var currentRoute = new List<int>();
+        
+        Backtrack(candidates, target, 0, currentRoute, result);
+        
+        return result;
+    }
+    
+    private void Backtrack(int[] candidates, int target, int i, List<int> currentRoute, IList<IList<int>> result) {
+        if (target == 0) {
+            result.Add(new List<int>(currentRoute));
+            return;
+        }
+        
+        if (target < 0 || i >= candidates.Length) {
+            return;
+        }
+        
+        // Include candidates[i]
+        currentRoute.Add(candidates[i]);
+        Backtrack(candidates, target - candidates[i], i, currentRoute, result);
+        
+        // Exclude candidates[i]
+        currentRoute.RemoveAt(currentRoute.Count - 1);
+        Backtrack(candidates, target, i + 1, currentRoute, result);
+    }
+}
 ```
 
 | | Complexity |
@@ -450,8 +558,10 @@ function backtrack(openN, closedN, current_str):
 ## 11.24 Generate Parentheses — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`generate_parentheses.cpp`](generate_parentheses.cpp)
+### ✅ C++ & C# Solutions
+See [`generate_parentheses.cpp`](generate_parentheses.cpp) | [`generate_parentheses.cs`](generate_parentheses.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -474,6 +584,34 @@ private:
         }
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public IList<string> GenerateParenthesis(int n) {
+        var result = new List<string>();
+        Backtrack(0, 0, n, "", result);
+        return result;
+    }
+    
+    private void Backtrack(int openN, int closedN, int n, string current, IList<string> result) {
+        if (current.Length == n * 2) {
+            result.Add(current);
+            return;
+        }
+        
+        if (openN < n) {
+            Backtrack(openN + 1, closedN, n, current + "(", result);
+        }
+        
+        if (closedN < openN) {
+            Backtrack(openN, closedN + 1, n, current + ")", result);
+        }
+    }
+}
 ```
 
 | | Complexity |
@@ -562,8 +700,10 @@ for r to rows:
 ## 11.30 Word Search — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`word_search.cpp`](word_search.cpp)
+### ✅ C++ & C# Solutions
+See [`word_search.cpp`](word_search.cpp) | [`word_search.cs`](word_search.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -601,6 +741,46 @@ private:
         return res;
     }
 };
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public bool Exist(char[][] board, string word) {
+        int rows = board.Length;
+        int cols = board[0].Length;
+        
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (Dfs(board, r, c, word, 0)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    private bool Dfs(char[][] board, int r, int c, string word, int i) {
+        if (i == word.Length) return true;
+        
+        if (r < 0 || c < 0 || r >= board.Length || c >= board[0].Length || board[r][c] != word[i]) {
+            return false;
+        }
+        
+        char temp = board[r][c];
+        board[r][c] = '#'; // Mark as visited
+        
+        bool res = Dfs(board, r + 1, c, word, i + 1) ||
+                   Dfs(board, r - 1, c, word, i + 1) ||
+                   Dfs(board, r, c + 1, word, i + 1) ||
+                   Dfs(board, r, c - 1, word, i + 1);
+                   
+        board[r][c] = temp; // Unmark
+        
+        return res;
+    }
+}
 ```
 
 | | Complexity |

@@ -56,9 +56,10 @@ while left < right:
     else: return [left+1, right+1]  // 1-indexed
 ```
 
-### ✅ C++ Solution
-See [`two_sum_ii.cpp`](two_sum_ii.cpp)
+### ✅ C++ & C# Solutions
+See [`two_sum_ii.cpp`](two_sum_ii.cpp) | [`two_sum_ii.cs`](two_sum_ii.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -70,9 +71,32 @@ public:
             else if (sum < target)  left++;
             else return {left + 1, right + 1}; // 1-indexed
         }
-        return {}; // guaranteed to find solution
-    }
+}
 };
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public int[] TwoSum(int[] numbers, int target) {
+        int left = 0;
+        int right = numbers.Length - 1;
+        
+        while (left < right) {
+            int currentSum = numbers[left] + numbers[right];
+            
+            if (currentSum > target) {
+                right--;
+            } else if (currentSum < target) {
+                left++;
+            } else {
+                return new int[] { left + 1, right + 1 };
+            }
+        }
+        
+        return new int[0];
+    }
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -150,9 +174,10 @@ for i from 0 to n-3:
 return result
 ```
 
-### ✅ C++ Solution
-See [`three_sum.cpp`](three_sum.cpp)
+### ✅ C++ & C# Solutions
+See [`three_sum.cpp`](three_sum.cpp) | [`three_sum.cs`](three_sum.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -180,9 +205,47 @@ public:
                 }
             }
         }
+}
+};
+```
+
+**C# Implementation**
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public IList<IList<int>> ThreeSum(int[] nums) {
+        var result = new List<IList<int>>();
+        Array.Sort(nums);
+        
+        for (int i = 0; i < nums.Length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] > 0) break;
+            
+            int left = i + 1;
+            int right = nums.Length - 1;
+            
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                
+                if (sum > 0) {
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    result.Add(new List<int> { nums[i], nums[left], nums[right] });
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1]) left++;
+                    while (left < right && nums[right] == nums[right + 1]) right--;
+                }
+            }
+        }
+        
         return result;
     }
-};
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -254,9 +317,10 @@ for right from 0 to n-1:
 return maxLen
 ```
 
-### ✅ C++ Solution
-See [`longest_substring_no_repeat.cpp`](longest_substring_no_repeat.cpp)
+### ✅ C++ & C# Solutions
+See [`longest_substring_no_repeat.cpp`](longest_substring_no_repeat.cpp) | [`longest_substring_no_repeat.cs`](longest_substring_no_repeat.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -273,9 +337,33 @@ public:
             window.insert(s[right]);
             maxLen = max(maxLen, right - left + 1);
         }
-        return maxLen;
-    }
+}
 };
+```
+
+**C# Implementation**
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        var charSet = new HashSet<char>();
+        int left = 0;
+        int maxLength = 0;
+        
+        for (int right = 0; right < s.Length; right++) {
+            while (charSet.Contains(s[right])) {
+                charSet.Remove(s[left]);
+                left++;
+            }
+            charSet.Add(s[right]);
+            maxLength = Math.Max(maxLength, right - left + 1);
+        }
+        
+        return maxLength;
+    }
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -340,9 +428,10 @@ while left < right:
 return maxArea
 ```
 
-### ✅ C++ Solution
-See [`container_with_most_water.cpp`](container_with_most_water.cpp)
+### ✅ C++ & C# Solutions
+See [`container_with_most_water.cpp`](container_with_most_water.cpp) | [`container_with_most_water.cs`](container_with_most_water.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -361,9 +450,34 @@ public:
                 right--;
             }
         }
+}
+};
+```
+
+**C# Implementation**
+```csharp
+using System;
+
+public class Solution {
+    public int MaxArea(int[] height) {
+        int maxArea = 0;
+        int left = 0;
+        int right = height.Length - 1;
+        
+        while (left < right) {
+            int currentArea = Math.Min(height[left], height[right]) * (right - left);
+            maxArea = Math.Max(maxArea, currentArea);
+            
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        
         return maxArea;
     }
-};
+}
 ```
 
 ### 📊 Complexity Analysis

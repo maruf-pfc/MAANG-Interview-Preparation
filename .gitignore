@@ -5,6 +5,7 @@
 a.out
 build/
 bin/
+obj/
 .cache/
 
 # Compiled objects

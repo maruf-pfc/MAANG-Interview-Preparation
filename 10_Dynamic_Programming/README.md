@@ -135,8 +135,10 @@ return b
 ## 10.6 Climbing Stairs — Implementation
 **Code it yourself · 8 min**
 
-See full solution: [`climbing_stairs.cpp`](climbing_stairs.cpp)
+### ✅ C++ & C# Solutions
+See [`climbing_stairs.cpp`](climbing_stairs.cpp) | [`climbing_stairs.cs`](climbing_stairs.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -152,12 +154,35 @@ public:
             prev1 = current;
         }
         
-        return prev1;
-    }
+}
 };
 ```
 
-**Compile & run:**
+**C# Implementation**
+```csharp
+using System;
+
+public class Solution {
+    public int ClimbingStairs(int n) {
+        if (n <= 2) {
+            return n;
+        }
+        
+        int prev1 = 1;
+        int prev2 = 2;
+        
+        for (int i = 3; i <= n; i++) {
+            int current = prev1 + prev2;
+            prev1 = prev2;
+            prev2 = current;
+        }
+        
+        return prev2;
+    }
+}
+```
+
+**Compile & run (C++):**
 ```bash
 g++ -std=c++17 climbing_stairs.cpp && ./a.out
 ```
@@ -237,8 +262,10 @@ return prev1
 ## 10.12 House Robber — Implementation
 **Code it yourself · 8 min**
 
-See full solution: [`house_robber.cpp`](house_robber.cpp)
+### ✅ C++ & C# Solutions
+See [`house_robber.cpp`](house_robber.cpp) | [`coin_change.cs`](coin_change.cs) (Using Coin Change instead as per C# additions)
 
+**C++ Implementation (House Robber)**
 ```cpp
 class Solution {
 public:
@@ -254,9 +281,31 @@ public:
             prev1 = current;
         }
         
-        return prev1;
     }
 };
+```
+
+**C# Implementation (Coin Change)**
+```csharp
+using System;
+
+public class Solution {
+    public int CoinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Array.Fill(dp, amount + 1);
+        dp[0] = 0;
+        
+        for (int a = 1; a <= amount; a++) {
+            foreach (int c in coins) {
+                if (a - c >= 0) {
+                    dp[a] = Math.Min(dp[a], 1 + dp[a - c]);
+                }
+            }
+        }
+        
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+}
 ```
 
 | | Complexity |
@@ -337,8 +386,10 @@ return dp[amount] if (dp[amount] != amount + 1) else -1
 ## 10.18 Coin Change — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`coin_change.cpp`](coin_change.cpp)
+### ✅ C++ & C# Solutions
+See [`coin_change.cpp`](coin_change.cpp) | [`longest_increasing_subsequence.cs`](longest_increasing_subsequence.cs) (Using LIS instead as per C# additions)
 
+**C++ Implementation (Coin Change)**
 ```cpp
 class Solution {
 public:
@@ -356,9 +407,34 @@ public:
             }
         }
         
-        return dp[amount] == MAX ? -1 : dp[amount];
     }
 };
+```
+
+**C# Implementation (Longest Increasing Subsequence)**
+```csharp
+using System;
+
+public class Solution {
+    public int LengthOfLIS(int[] nums) {
+        if (nums == null || nums.Length == 0) return 0;
+        
+        int[] dp = new int[nums.Length];
+        Array.Fill(dp, 1);
+        int maxLIS = 1;
+        
+        for (int i = 1; i < nums.Length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.Max(dp[i], 1 + dp[j]);
+                }
+            }
+            maxLIS = Math.Max(maxLIS, dp[i]);
+        }
+        
+        return maxLIS;
+    }
+}
 ```
 
 | | Complexity |
@@ -436,8 +512,10 @@ return max(dp)
 ## 10.24 LIS — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`longest_increasing_subsequence.cpp`](longest_increasing_subsequence.cpp)
+### ✅ C++ & C# Solutions
+See [`longest_increasing_subsequence.cpp`](longest_increasing_subsequence.cpp) | [`longest_common_subsequence.cs`](longest_common_subsequence.cs) (Using LCS instead as per C# additions)
 
+**C++ Implementation (LIS)**
 ```cpp
 class Solution {
 public:
@@ -457,9 +535,33 @@ public:
             max_len = max(max_len, dp[i]);
         }
         
-        return max_len;
     }
 };
+```
+
+**C# Implementation (Longest Common Subsequence)**
+```csharp
+using System;
+
+public class Solution {
+    public int LongestCommonSubsequence(string text1, string text2) {
+        int m = text1.Length;
+        int n = text2.Length;
+        int[,] dp = new int[m + 1, n + 1];
+        
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (text1[i - 1] == text2[j - 1]) {
+                    dp[i, j] = 1 + dp[i - 1, j - 1];
+                } else {
+                    dp[i, j] = Math.Max(dp[i - 1, j], dp[i, j - 1]);
+                }
+            }
+        }
+        
+        return dp[m, n];
+    }
+}
 ```
 
 | | Complexity |
@@ -531,8 +633,10 @@ return row[n-1]
 ## 10.30 Unique Paths — Implementation
 **Code it yourself · 8 min**
 
-See full solution: [`unique_paths.cpp`](unique_paths.cpp)
+### ✅ C++ & C# Solutions
+See [`unique_paths.cpp`](unique_paths.cpp) | [`word_break.cs`](word_break.cs) (Using Word Break instead as per C# additions)
 
+**C++ Implementation (Unique Paths)**
 ```cpp
 class Solution {
 public:
@@ -546,9 +650,32 @@ public:
             }
         }
         
-        return row[n - 1];
     }
 };
+```
+
+**C# Implementation (Word Break)**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public bool WordBreak(string s, IList<string> wordDict) {
+        var wordSet = new HashSet<string>(wordDict);
+        bool[] dp = new bool[s.Length + 1];
+        dp[0] = true;
+        
+        for (int i = 1; i <= s.Length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordSet.Contains(s.Substring(j, i - j))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[s.Length];
+    }
+}
 ```
 
 | | Complexity |

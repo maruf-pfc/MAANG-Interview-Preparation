@@ -4,7 +4,7 @@
   "description": "Welcome to the **MAANG Interview Prep** repository. This is a comprehensive, open-source guide designed to prepare you for coding interviews at Meta, Amazon, Apple, Netflix, and Google.",
   "main": "index.js",
   "scripts": {
-    "test": "./test_all.sh",
+    "test": "./test_all.sh && ./test_all_cs.sh",
     "prepare": "husky"
   },
   "repository": {

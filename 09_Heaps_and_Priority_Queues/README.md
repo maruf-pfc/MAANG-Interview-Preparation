@@ -125,8 +125,11 @@ return minHeap.top()       // Kth largest
 
 ## 9.6 Kth Largest — Implementation
 
-See full solution: [`kth_largest_element.cpp`](kth_largest_element.cpp)
+### ✅ C++ & C# Solutions
 
+See [`kth_largest_element.cpp`](kth_largest_element.cpp) | [`last_stone_weight.cs`](last_stone_weight.cs) (Using Last Stone Weight instead as per C# additions)
+
+**C++ Implementation (Kth Largest Element)**
 ```cpp
 class Solution {
 public:
@@ -137,9 +140,34 @@ public:
             if ((int)minHeap.size() > k)
                 minHeap.pop();
         }
-        return minHeap.top();
-    }
+}
 };
+```
+
+**C# Implementation (Last Stone Weight)**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public int LastStoneWeight(int[] stones) {
+        var maxHeap = new PriorityQueue<int, int>();
+        
+        foreach (int stone in stones) {
+            maxHeap.Enqueue(stone, -stone);
+        }
+        
+        while (maxHeap.Count > 1) {
+            int y = maxHeap.Dequeue();
+            int x = maxHeap.Dequeue();
+            
+            if (x != y) {
+                maxHeap.Enqueue(y - x, -(y - x));
+            }
+        }
+        
+        return maxHeap.Count == 0 ? 0 : maxHeap.Dequeue();
+    }
+}
 ```
 
 ```bash
@@ -206,8 +234,11 @@ add(val):
 
 ## 9.12 Kth Largest Stream — Implementation
 
-See full solution: [`kth_largest_stream.cpp`](kth_largest_stream.cpp)
+### ✅ C++ & C# Solutions
 
+See [`kth_largest_stream.cpp`](kth_largest_stream.cpp) | [`kth_largest_element_in_a_stream.cs`](kth_largest_element_in_a_stream.cs)
+
+**C++ Implementation**
 ```cpp
 class KthLargest {
     priority_queue<int, vector<int>, greater<int>> minHeap;
@@ -222,9 +253,36 @@ public:
     int add(int val) {
         minHeap.push(val);
         if ((int)minHeap.size() > k) minHeap.pop();
-        return minHeap.top();
-    }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class KthLargest {
+    private PriorityQueue<int, int> minHeap;
+    private int k;
+
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        minHeap = new PriorityQueue<int, int>();
+        
+        foreach (int num in nums) {
+            Add(num);
+        }
+    }
+    
+    public int Add(int val) {
+        minHeap.Enqueue(val, val);
+        
+        if (minHeap.Count > k) {
+            minHeap.Dequeue();
+        }
+        
+        return minHeap.Peek();
+    }
+}
 ```
 
 | | Time | Space |
@@ -302,8 +360,11 @@ findMedian():
 
 ## 9.18 Find Median — Implementation
 
-See full solution: [`find_median_stream.cpp`](find_median_stream.cpp)
+### ✅ C++ & C# Solutions
 
+See [`find_median_stream.cpp`](find_median_stream.cpp) | [`find_median_from_data_stream.cs`](find_median_from_data_stream.cs)
+
+**C++ Implementation**
 ```cpp
 class MedianFinder {
     priority_queue<int> lo;                               // max-heap: lower half
@@ -318,9 +379,48 @@ public:
     double findMedian() {
         if (lo.size() > hi.size()) return lo.top();
         if (hi.size() > lo.size()) return hi.top();
-        return (lo.top() + hi.top()) / 2.0;
-    }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class MedianFinder {
+    private PriorityQueue<int, int> maxHeap; // Lower half
+    private PriorityQueue<int, int> minHeap; // Upper half
+
+    public MedianFinder() {
+        maxHeap = new PriorityQueue<int, int>();
+        minHeap = new PriorityQueue<int, int>();
+    }
+    
+    public void AddNum(int num) {
+        maxHeap.Enqueue(num, -num); // Add to lower half first
+        
+        // Ensure max in lower half <= min in upper half
+        if (maxHeap.Count > 0 && minHeap.Count > 0 && maxHeap.Peek() > minHeap.Peek()) {
+            int val = maxHeap.Dequeue();
+            minHeap.Enqueue(val, val);
+        }
+        
+        // Balance sizes
+        if (maxHeap.Count > minHeap.Count + 1) {
+            int val = maxHeap.Dequeue();
+            minHeap.Enqueue(val, val);
+        } else if (minHeap.Count > maxHeap.Count) {
+            int val = minHeap.Dequeue();
+            maxHeap.Enqueue(val, -val);
+        }
+    }
+    
+    public double FindMedian() {
+        if (maxHeap.Count > minHeap.Count) {
+            return maxHeap.Peek();
+        }
+        return (maxHeap.Peek() + minHeap.Peek()) / 2.0;
+    }
+}
 ```
 
 | | Time | Space |
@@ -389,8 +489,11 @@ return dummy.next
 
 ## 9.24 Merge K Sorted Lists — Implementation
 
-See full solution: [`merge_k_sorted_lists.cpp`](merge_k_sorted_lists.cpp)
+### ✅ C++ & C# Solutions
 
+See [`merge_k_sorted_lists.cpp`](merge_k_sorted_lists.cpp) | [`k_closest_points_to_origin.cs`](k_closest_points_to_origin.cs) (Using K Closest Points to Origin instead as per C# additions)
+
+**C++ Implementation (Merge K Sorted Lists)**
 ```cpp
 class Solution {
 public:
@@ -406,9 +509,35 @@ public:
             tail->next = node; tail = tail->next;
             if (node->next) minHeap.push({node->next->val, i, node->next});
         }
-        return dummy.next;
-    }
 };
+```
+
+**C# Implementation (K Closest Points to Origin)**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public int[][] KClosest(int[][] points, int k) {
+        // MaxHeap based on distance
+        var maxHeap = new PriorityQueue<int[], int>();
+        
+        foreach (var point in points) {
+            int dist = point[0] * point[0] + point[1] * point[1];
+            maxHeap.Enqueue(point, -dist); // Negative for max heap
+            
+            if (maxHeap.Count > k) {
+                maxHeap.Dequeue();
+            }
+        }
+        
+        int[][] result = new int[k][];
+        for (int i = 0; i < k; i++) {
+            result[i] = maxHeap.Dequeue();
+        }
+        
+        return result;
+    }
+}
 ```
 
 | | Time | Space |

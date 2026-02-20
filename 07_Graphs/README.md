@@ -124,8 +124,10 @@ return count
 ## 7.6 Number of Islands — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`number_of_islands.cpp`](number_of_islands.cpp)
+### ✅ C++ & C# Solutions
+See [`number_of_islands.cpp`](number_of_islands.cpp) | [`number_of_islands.cs`](number_of_islands.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -149,7 +151,49 @@ private:
 };
 ```
 
-**Compile & run:**
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public int NumIslands(char[][] grid) {
+        if (grid == null || grid.Length == 0) return 0;
+        
+        int numIslands = 0;
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+        
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (grid[r][c] == '1') {
+                    numIslands++;
+                    Dfs(grid, r, c);
+                }
+            }
+        }
+        
+        return numIslands;
+    }
+    
+    private void Dfs(char[][] grid, int r, int c) {
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+        
+        if (r < 0 || c < 0 || r >= rows || c >= cols || grid[r][c] == '0') {
+            return;
+        }
+        
+        grid[r][c] = '0'; // mark as visited
+        
+        Dfs(grid, r - 1, c); // up
+        Dfs(grid, r + 1, c); // down
+        Dfs(grid, r, c - 1); // left
+        Dfs(grid, r, c + 1); // right
+    }
+}
+```
+
+**Compile & run (C++):**
 ```bash
 g++ -std=c++17 number_of_islands.cpp && ./a.out
 ```
@@ -191,6 +235,18 @@ Each node has a `val` and a list of `neighbors`. A deep copy means new nodes wit
 
 ```cpp
 class Node { public: int val; vector<Node*> neighbors; };
+```
+
+**C# Node Definition:**
+```csharp
+public class Node {
+    public int val;
+    public IList<Node> neighbors;
+
+    public Node() { val = 0; neighbors = new List<Node>(); }
+    public Node(int _val) { val = _val; neighbors = new List<Node>(); }
+    public Node(int _val, List<Node> _neighbors) { val = _val; neighbors = _neighbors; }
+}
 ```
 
 ---
@@ -239,8 +295,10 @@ return dfs(node) if node else null
 ## 7.12 Clone Graph — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`clone_graph.cpp`](clone_graph.cpp)
+### ✅ C++ & C# Solutions
+See [`clone_graph.cpp`](clone_graph.cpp) | [`clone_graph.cs`](clone_graph.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
     unordered_map<Node*, Node*> oldToNew;
@@ -259,6 +317,32 @@ private:
         return clone;
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    private Dictionary<Node, Node> visited = new Dictionary<Node, Node>();
+    
+    public Node CloneGraph(Node node) {
+        if (node == null) return null;
+        
+        if (visited.ContainsKey(node)) {
+            return visited[node];
+        }
+        
+        Node cloneNode = new Node(node.val);
+        visited[node] = cloneNode;
+        
+        foreach (var neighbor in node.neighbors) {
+            cloneNode.neighbors.Add(CloneGraph(neighbor));
+        }
+        
+        return cloneNode;
+    }
+}
 ```
 
 | | Complexity |
@@ -346,8 +430,10 @@ return true
 ## 7.18 Course Schedule — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`course_schedule.cpp`](course_schedule.cpp)
+### ✅ C++ & C# Solutions
+See [`course_schedule.cpp`](course_schedule.cpp) | [`course_schedule.cs`](course_schedule.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -369,9 +455,49 @@ private:
         for (int prereq : adj[course])
             if (!dfs(prereq, adj, state)) return false;
         state[course] = 2;
-        return true;
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public bool CanFinish(int numCourses, int[][] prerequisites) {
+        var preMap = new Dictionary<int, List<int>>();
+        for (int i = 0; i < numCourses; i++) {
+            preMap[i] = new List<int>();
+        }
+        foreach (var pre in prerequisites) {
+            preMap[pre[0]].Add(pre[1]);
+        }
+        
+        var visitedSet = new HashSet<int>();
+        
+        for (int c = 0; c < numCourses; c++) {
+            if (!Dfs(c, preMap, visitedSet)) return false;
+        }
+        
+        return true;
+    }
+    
+    private bool Dfs(int crs, Dictionary<int, List<int>> preMap, HashSet<int> visited) {
+        if (visited.Contains(crs)) return false; // Cycle detected
+        if (preMap[crs].Count == 0) return true;
+        
+        visited.Add(crs);
+        
+        foreach (int pre in preMap[crs]) {
+            if (!Dfs(pre, preMap, visited)) return false;
+        }
+        
+        visited.Remove(crs);
+        preMap[crs].Clear();
+        
+        return true;
+    }
+}
 ```
 
 | | Complexity |

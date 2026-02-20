@@ -1,11 +1,12 @@
 <div align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Logo" width="100"/>
-  <h1>MAANG Interview Prep in C++</h1>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Logo" width="80"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png" alt="C# Logo" width="80"/>
+  <h1>MAANG Interview Prep in C++ & C#</h1>
   <p><strong>A highly detailed, Open-Source Interactive Notebook Curriculum for cracking Meta, Amazon, Apple, Netflix, and Google.</strong></p>
 
   <p>
-    <a href="https://github.com/maruf-pfc/MAANG-Interview-Preparation/actions/workflows/cpp-ci.yml">
-      <img src="https://github.com/maruf-pfc/MAANG-Interview-Preparation/actions/workflows/cpp-ci.yml/badge.svg" alt="C++ CI Tests">
+    <a href="https://github.com/maruf-pfc/MAANG-Interview-Preparation/actions/workflows/multi-lang-ci.yml">
+      <img src="https://github.com/maruf-pfc/MAANG-Interview-Preparation/actions/workflows/multi-lang-ci.yml/badge.svg" alt="C++ & C# CI Tests">
     </a>
     <a href="https://github.com/maruf-pfc/MAANG-Interview-Preparation/issues">
       <img src="https://img.shields.io/github/issues/maruf-pfc/MAANG-Interview-Preparation?style=flat-square" alt="Issues">
@@ -21,9 +22,9 @@
 
 ---
 
-Welcome to the **MAANG Interview Prep** repository, a comprehensive, C++ exclusive rewrite of the excellent curriculum from the **Repovive roadmap by Shayan Chashm Jahan**. 
+Welcome to the **MAANG Interview Prep** repository, a comprehensive, multi-language (C++ & C#) curriculum rewritten from the excellent **Repovive roadmap by Shayan Chashm Jahan**. 
 
-This repository transforms the roadmap into a series of highly detailed "notebooks". It is designed specifically for high-performance software engineering candidates targeting top-tier tech companies.
+This repository transforms the roadmap into a series of highly detailed "notebooks." It is designed specifically for high-performance software engineering candidates targeting top-tier tech companies. The inclusion of **C#** helps reinforce Object-Oriented Programming (OOP) principles and enterprise design patterns.
 
 ## 🚀 What Makes This Repository Special?
 
@@ -34,7 +35,7 @@ Instead of just linking out to LeetCode or dumping bare code files, every sectio
 3. **The Hint:** A nudge in the right direction if you get stuck without reading the answer.
 4. **Solution Explanation:** Step-by-step logic detailing the algorithm.
 5. **Pseudocode:** Language-agnostic logic to help you internalize the pattern.
-6. **Detailed C++ Implementation:** Production-ready C++ (C++17) code.
+6. **Detailed Code Implementation:** Production-ready C++ (C++17) code and idiomatic C# utilizing OOP paradigms.
 7. **Complexity Analysis:** Deep dive into Time and Space constraints.
 8. **Edge Cases & Common Mistakes:** What will actually trip you up in a live interview.
 9. **Interview Context:** Why MAANG companies ask this specific question.
@@ -73,6 +74,10 @@ The curriculum is divided into 11 strictly ordered sections. Do not skip around 
 * [**11 · Backtracking**](11_Backtracking/README.md)
   * Combinatorial search trees, subsets, permutations, constrained exploration.
 
+### 🏗️ Part 4: System Design & Architecture
+* [**12 · System Design**](12_System_Design/README.md)
+  * Multi-tiered architectures, databases, load balancing, microservices, and Object-Oriented Design (OOD).
+
 ---
 
 ## 💻 How to Use This Guide
@@ -87,8 +92,9 @@ The curriculum is divided into 11 strictly ordered sections. Do not skip around 
 
 ## ⚙️ Running Locally & Testing
 
-All solutions are self-contained C++ files with a `main()` validation entry point. You can compile any file individually using GCC/Clang:
+All solutions are self-contained files. C++ files include a `main()` validation entry point, while C# files are verified for compilation against .NET syntactical correctness.
 
+**C++ Example:**
 ```bash
 cd 02_Arrays_and_Hashing
 g++ -std=c++17 two_sum.cpp -o two_sum
@@ -96,16 +102,18 @@ g++ -std=c++17 two_sum.cpp -o two_sum
 ```
 
 ### Full Repository Verification
-We maintain a zero-broken-code policy. You can run the top-level test script to globally verify that every single C++ solution in the repository compiles under `c++17` and passes its internal assertions:
+We maintain a zero-broken-code policy. You can run the top-level test scripts to globally verify that every single C++ solution in the repository compiles under `c++17` (and passes internal assertions) and every C# file is cleanly verified:
 
 ```bash
-# Ensure script is executable
-chmod +x test_all.sh
+# Ensure scripts are executable
+chmod +x test_all.sh test_all_cs.sh
 
-# Run the full test suite
+# Run the full test suite via NPM
 npm run test
-# OR
+
+# OR run manually
 ./test_all.sh
+./test_all_cs.sh
 ```
 *Note: This repository uses Husky pre-commit hooks to ensure no broken code can be pushed to the repository.*
 
@@ -128,4 +136,4 @@ We welcome contributions from the open-source community! If you find a bug, want
 
 This project is open-source and available under the terms of the MIT License. 
 
-*The problem set and syllabus structure are based on the Repovive roadmap by Shayan Chashm Jahan. Implemented entirely in modern C++ for high-performance engineering interviews.*
+*The problem set and syllabus structure are based on the Repovive roadmap by Shayan Chashm Jahan. Implemented entirely in modern C++ and idiomatic C# for high-performance engineering interviews.*

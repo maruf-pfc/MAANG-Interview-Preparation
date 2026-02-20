@@ -118,8 +118,10 @@ return stack.empty()
 ## 5.6 Valid Parentheses — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`valid_parentheses.cpp`](valid_parentheses.cpp)
+### ✅ C++ & C# Solutions
+See [`valid_parentheses.cpp`](valid_parentheses.cpp) | [`valid_parentheses.cs`](valid_parentheses.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -138,12 +140,41 @@ public:
                 st.push(c);   // opening bracket
             }
         }
-        return st.empty();    // all opened brackets were closed
+        return st.empty();
     }
 };
 ```
 
-**Compile & run:**
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public bool IsValid(string s) {
+        var stack = new Stack<char>();
+        var map = new Dictionary<char, char> {
+            {')', '('},
+            {'}', '{'},
+            {']', '['}
+        };
+        
+        foreach (char c in s) {
+            if (map.ContainsKey(c)) {
+                if (stack.Count == 0 || stack.Peek() != map[c]) {
+                    return false;
+                }
+                stack.Pop();
+            } else {
+                stack.Push(c);
+            }
+        }
+        
+        return stack.Count == 0;
+    }
+}
+```
+
+**Compile & run (C++):**
 ```bash
 g++ -std=c++17 valid_parentheses.cpp && ./a.out
 ```
@@ -232,20 +263,66 @@ getMin(): return stack.top().second
 ## 5.12 Min Stack — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`min_stack.cpp`](min_stack.cpp)
+### ✅ C++ & C# Solutions
+See [`min_stack.cpp`](min_stack.cpp) | [`min_stack.cs`](min_stack.cs)
 
+**C++ Implementation**
 ```cpp
 class MinStack {
     stack<pair<int,int>> st;   // {value, min_so_far}
 public:
+    MinStack() {} // Constructor
     void push(int val) {
         int currentMin = st.empty() ? val : min(val, st.top().second);
         st.push({val, currentMin});
     }
-    void pop()   { st.pop(); }
-    int top()    { return st.top().first; }
-    int getMin() { return st.top().second; }
+    
+    void pop() {
+        st.pop();
+    }
+    
+    int top() {
+        return st.top().first;
+    }
+    
+    int getMin() {
+        return st.top().second;
+    }
 };
+```
+
+**C# Implementation**
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class MinStack {
+    private Stack<int> stack;
+    private Stack<int> minStack;
+
+    public MinStack() {
+        stack = new Stack<int>();
+        minStack = new Stack<int>();
+    }
+    
+    public void Push(int val) {
+        stack.Push(val);
+        if (minStack.Count == 0 || val <= minStack.Peek()) {
+            minStack.Push(val);
+        }
+    }
+    
+    public void Pop() {
+        if (stack.Count == 0) return;
+        int popped = stack.Pop();
+        if (minStack.Count > 0 && popped == minStack.Peek()) {
+            minStack.Pop();
+        }
+    }
+    
+    public int Top() { return stack.Peek(); }
+    public int GetMin() { return minStack.Peek(); }
+}
 ```
 
 | | Complexity |
@@ -331,8 +408,10 @@ return [nextGreater[n] for n in nums1]
 ## 5.18 Next Greater Element I — Implementation
 **Code it yourself · 8 min**
 
-See full solution: [`next_greater_element.cpp`](next_greater_element.cpp)
+### ✅ C++ & C# Solutions
+See [`next_greater_element.cpp`](next_greater_element.cpp) | [`next_greater_element.cs`](next_greater_element.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -352,9 +431,36 @@ public:
         vector<int> result;
         for (int n : nums1)
             result.push_back(nextGreater.count(n) ? nextGreater[n] : -1);
+        
         return result;
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public int[] NextGreaterElement(int[] nums1, int[] nums2) {
+        var nextGreater = new Dictionary<int, int>();
+        var stack = new Stack<int>();
+        
+        foreach (int num in nums2) {
+            while (stack.Count > 0 && stack.Peek() < num) {
+                nextGreater[stack.Pop()] = num;
+            }
+            stack.Push(num);
+        }
+        
+        int[] result = new int[nums1.Length];
+        for (int i = 0; i < nums1.Length; i++) {
+            result[i] = nextGreater.ContainsKey(nums1[i]) ? nextGreater[nums1[i]] : -1;
+        }
+        
+        return result;
+    }
+}
 ```
 
 | | Complexity |
@@ -436,8 +542,10 @@ return result
 ## 5.24 Daily Temperatures — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`daily_temperatures.cpp`](daily_temperatures.cpp)
+### ✅ C++ & C# Solutions
+See [`daily_temperatures.cpp`](daily_temperatures.cpp) | [`daily_temperatures.cs`](daily_temperatures.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -453,9 +561,31 @@ public:
             }
             st.push(i);
         }
-        return result;   // remaining stack entries stay 0
-    }
+}
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public int[] DailyTemperatures(int[] temperatures) {
+        int n = temperatures.Length;
+        int[] result = new int[n];
+        var stack = new Stack<int>(); // stores indices
+        
+        for (int i = 0; i < n; i++) {
+            while (stack.Count > 0 && temperatures[i] > temperatures[stack.Peek()]) {
+                int prevDay = stack.Pop();
+                result[prevDay] = i - prevDay;
+            }
+            stack.Push(i);
+        }
+        
+        return result;
+    }
+}
 ```
 
 | | Complexity |

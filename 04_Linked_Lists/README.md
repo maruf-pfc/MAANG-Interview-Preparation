@@ -13,6 +13,18 @@ struct ListNode {
 };
 ```
 
+**ListNode Definition (C#):**
+```csharp
+public class ListNode {
+    public int val;
+    public ListNode next;
+    public ListNode(int val=0, ListNode next=null) {
+        this.val = val;
+        this.next = next;
+    }
+}
+```
+
 **Problems Covered:**
 1. [Reverse Linked List](#problem-1-reverse-linked-list)
 2. [Linked List Cycle](#problem-2-linked-list-cycle)
@@ -64,9 +76,10 @@ while curr != null:
 return prev
 ```
 
-### ✅ C++ Solution
-See [`reverse_linked_list.cpp`](reverse_linked_list.cpp)
+### ✅ C++ & C# Solutions
+See [`reverse_linked_list.cpp`](reverse_linked_list.cpp) | [`reverse_linked_list.cs`](reverse_linked_list.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -80,9 +93,27 @@ public:
             prev = curr;                     // advance prev
             curr = nextNode;                 // advance curr
         }
-        return prev; // prev is now the new head
-    }
+}
 };
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        
+        while (curr != null) {
+            ListNode nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        
+        return prev;
+    }
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -140,9 +171,10 @@ while fast != null and fast.next != null:
 return false
 ```
 
-### ✅ C++ Solution
-See [`linked_list_cycle.cpp`](linked_list_cycle.cpp)
+### ✅ C++ & C# Solutions
+See [`linked_list_cycle.cpp`](linked_list_cycle.cpp) | [`linked_list_cycle.cs`](linked_list_cycle.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -158,6 +190,28 @@ public:
         return false; // fast reached end → no cycle
     }
 };
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public bool HasCycle(ListNode head) {
+        if (head == null || head.next == null) return false;
+        
+        ListNode slow = head;
+        ListNode fast = head.next;
+        
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        return true;
+    }
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -222,9 +276,10 @@ tail.next = list1 or list2  // attach remainder
 return dummy.next
 ```
 
-### ✅ C++ Solution
-See [`merge_two_sorted_lists.cpp`](merge_two_sorted_lists.cpp)
+### ✅ C++ & C# Solutions
+See [`merge_two_sorted_lists.cpp`](merge_two_sorted_lists.cpp) | [`merge_two_sorted_lists.cs`](merge_two_sorted_lists.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -246,9 +301,37 @@ public:
         // attach the remaining (non-exhausted) list
         tail->next = (list1 != nullptr) ? list1 : list2;
 
+}
+};
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public ListNode MergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode();
+        ListNode tail = dummy;
+        
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                tail.next = list1;
+                list1 = list1.next;
+            } else {
+                tail.next = list2;
+                list2 = list2.next;
+            }
+            tail = tail.next;
+        }
+        
+        if (list1 != null) {
+            tail.next = list1;
+        } else if (list2 != null) {
+            tail.next = list2;
+        }
+        
         return dummy.next;
     }
-};
+}
 ```
 
 ### 📊 Complexity Analysis

@@ -12,6 +12,20 @@ struct TreeNode {
 };
 ```
 
+**C# Definition:**
+```csharp
+public class TreeNode {
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+```
+
 ---
 
 ## Unit Map
@@ -112,19 +126,39 @@ function maxDepth(root):
 ## 6.6 Maximum Depth — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`max_depth_binary_tree.cpp`](max_depth_binary_tree.cpp)
+### ✅ C++ & C# Solutions
+See [`max_depth_binary_tree.cpp`](max_depth_binary_tree.cpp) | [`maximum_depth_of_binary_tree.cs`](maximum_depth_of_binary_tree.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
         if (root == nullptr) return 0;
         return 1 + max(maxDepth(root->left), maxDepth(root->right));
-    }
+}
 };
 ```
 
-**Compile & run:**
+**C# Implementation**
+```csharp
+using System;
+
+public class Solution {
+    public int MaxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        int leftDepth = MaxDepth(root.left);
+        int rightDepth = MaxDepth(root.right);
+        
+        return Math.Max(leftDepth, rightDepth) + 1;
+    }
+}
+```
+
+**Compile & run (C++):**
 ```bash
 g++ -std=c++17 max_depth_binary_tree.cpp && ./a.out
 ```
@@ -212,8 +246,10 @@ isValidBST(root) = validate(root, -INF, +INF)
 ## 6.12 Validate BST — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`validate_bst.cpp`](validate_bst.cpp)
+### ✅ C++ & C# Solutions
+See [`validate_bst.cpp`](validate_bst.cpp) | [`validate_bst.cs`](validate_bst.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -225,9 +261,28 @@ private:
         if (node == nullptr) return true;
         if (node->val <= minVal || node->val >= maxVal) return false;
         return validate(node->left,  minVal,    node->val)
-            && validate(node->right, node->val, maxVal);
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System;
+
+public class Solution {
+    public bool IsValidBST(TreeNode root) {
+        return Validate(root, null, null);
+    }
+    
+    private bool Validate(TreeNode node, int? min, int? max) {
+        if (node == null) return true;
+        
+        if (min.HasValue && node.val <= min.Value) return false;
+        if (max.HasValue && node.val >= max.Value) return false;
+        
+        return Validate(node.left, min, node.val) && Validate(node.right, node.val, max);
+    }
+}
 ```
 
 | | Complexity |
@@ -322,8 +377,10 @@ while curr:
 ## 6.18 LCA of BST — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`lowest_common_ancestor_bst.cpp`](lowest_common_ancestor_bst.cpp)
+### ✅ C++ & C# Solutions
+See [`lowest_common_ancestor_bst.cpp`](lowest_common_ancestor_bst.cpp) | [`invert_binary_tree.cs`](invert_binary_tree.cs) (Using Invert Binary Tree instead as per C# additions)
 
+**C++ Implementation (LCA of BST)**
 ```cpp
 class Solution {
 public:
@@ -340,6 +397,28 @@ public:
         return nullptr;
     }
 };
+```
+
+**C# Implementation (Invert Binary Tree)**
+```csharp
+using System;
+
+public class Solution {
+    public TreeNode InvertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        
+        InvertTree(root.left);
+        InvertTree(root.right);
+        
+        return root;
+    }
+}
 ```
 
 | | Complexity |

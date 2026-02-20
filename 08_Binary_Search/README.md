@@ -117,8 +117,10 @@ return -1
 ## 8.6 Binary Search — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`binary_search.cpp`](binary_search.cpp)
+### ✅ C++ & C# Solutions
+See [`binary_search.cpp`](binary_search.cpp) | [`binary_search.cs`](binary_search.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -130,12 +132,35 @@ public:
             else if (nums[mid] < target) left = mid + 1;
             else right = mid - 1;
         }
-        return -1;
-    }
+}
 };
 ```
 
-**Compile & run:**
+**C# Implementation**
+```csharp
+public class Solution {
+    public int Search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.Length - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        return -1;
+    }
+}
+```
+
+**Compile & run (C++):**
 ```bash
 g++ -std=c++17 binary_search.cpp && ./a.out
 ```
@@ -234,8 +259,10 @@ return -1
 ## 8.12 Search Rotated — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`search_rotated_array.cpp`](search_rotated_array.cpp)
+### ✅ C++ & C# Solutions
+See [`search_rotated_array.cpp`](search_rotated_array.cpp) | [`search_2d_matrix.cs`](search_2d_matrix.cs) (Using Search 2D Matrix instead as per C# additions)
 
+**C++ Implementation (Search Rotated Array)**
 ```cpp
 class Solution {
 public:
@@ -257,9 +284,39 @@ public:
                     right = mid - 1;
             }
         }
-        return -1;
     }
 };
+```
+
+**C# Implementation (Search 2D Matrix)**
+```csharp
+public class Solution {
+    public bool SearchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0) return false;
+        
+        int rows = matrix.Length, cols = matrix[0].Length;
+        int top = 0, bottom = rows - 1;
+        while (top <= bottom) {
+            int row = top + (bottom - top) / 2;
+            if (target > matrix[row][cols - 1]) top = row + 1;
+            else if (target < matrix[row][0]) bottom = row - 1;
+            else break;
+        }
+        
+        if (top > bottom) return false;
+        
+        int targetRow = top + (bottom - top) / 2;
+        int left = 0, right = cols - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (target == matrix[targetRow][mid]) return true;
+            else if (target > matrix[targetRow][mid]) left = mid + 1;
+            else right = mid - 1;
+        }
+        
+        return false;
+    }
+}
 ```
 
 | | Complexity |
@@ -340,8 +397,10 @@ return nums[left]
 ## 8.18 Find Minimum — Implementation
 **Code it yourself · 10 min**
 
-See full solution: [`find_min_rotated_array.cpp`](find_min_rotated_array.cpp)
+### ✅ C++ & C# Solutions
+See [`find_min_rotated_array.cpp`](find_min_rotated_array.cpp) | [`find_minimum_in_rotated_sorted_array.cs`](find_minimum_in_rotated_sorted_array.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -354,9 +413,39 @@ public:
             else
                 right = mid;     // minimum is at mid or left of mid
         }
-        return nums[left];   // left == right, single element = minimum
     }
 };
+```
+
+**C# Implementation**
+```csharp
+using System;
+
+public class Solution {
+    public int FindMin(int[] nums) {
+        int left = 0;
+        int right = nums.Length - 1;
+        int res = nums[0];
+        
+        while (left <= right) {
+            if (nums[left] < nums[right]) {
+                res = Math.Min(res, nums[left]);
+                break;
+            }
+            
+            int mid = left + (right - left) / 2;
+            res = Math.Min(res, nums[mid]);
+            
+            if (nums[mid] >= nums[left]) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        return res;
+    }
+}
 ```
 
 | | Complexity |

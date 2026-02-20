@@ -1,0 +1,35 @@
+name: C++ and C# CI Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up GCC (C++)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential
+
+    - name: Set up .NET (C#)
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x' # Or use 6.0.x/7.0.x if preferred
+
+    - name: Make scripts executable
+      run: |
+        chmod +x test_all.sh
+        chmod +x test_all_cs.sh
+
+    - name: Run C++ test suite
+      run: ./test_all.sh
+
+    - name: Run C# compilation checks
+      run: ./test_all_cs.sh

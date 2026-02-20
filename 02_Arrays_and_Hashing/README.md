@@ -54,9 +54,10 @@ for i from 0 to n-1:
     map[nums[i]] = i
 ```
 
-### ✅ C++ Solution
-See [`two_sum.cpp`](two_sum.cpp)
+### ✅ C++ & C# Solutions
+See [`two_sum.cpp`](two_sum.cpp) | [`two_sum.cs`](two_sum.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -69,9 +70,29 @@ public:
             }
             seen[nums[i]] = i;
         }
-        return {}; // guaranteed solution exists
-    }
+}
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        var map = new Dictionary<int, int>();
+
+        for (int i = 0; i < nums.Length; i++) {
+            int complement = target - nums[i];
+            if (map.ContainsKey(complement)) {
+                return new int[] { map[complement], i };
+            }
+            map[nums[i]] = i;
+        }
+
+        return new int[0];
+    }
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -137,9 +158,10 @@ for each num in nums:
 return false
 ```
 
-### ✅ C++ Solution
-See [`contains_duplicate.cpp`](contains_duplicate.cpp)
+### ✅ C++ & C# Solutions
+See [`contains_duplicate.cpp`](contains_duplicate.cpp) | [`contains_duplicate.cs`](contains_duplicate.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -149,9 +171,25 @@ public:
             if (seen.count(num)) return true;
             seen.insert(num);
         }
+}
+};
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+
+public class Solution {
+    public bool ContainsDuplicate(int[] nums) {
+        var seen = new HashSet<int>();
+        foreach (var num in nums) {
+            if (!seen.Add(num)) { // Add returns false if already exists
+                return true;
+            }
+        }
         return false;
     }
-};
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -210,9 +248,10 @@ for each s in strs:
 return values of map
 ```
 
-### ✅ C++ Solution
-See [`group_anagrams.cpp`](group_anagrams.cpp)
+### ✅ C++ & C# Solutions
+See [`group_anagrams.cpp`](group_anagrams.cpp) | [`group_anagrams.cs`](group_anagrams.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -227,9 +266,33 @@ public:
         for (auto& [key, group] : groups) {
             result.push_back(group);
         }
-        return result;
-    }
+}
 };
+```
+
+**C# Implementation**
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) {
+        var map = new Dictionary<string, IList<string>>();
+
+        foreach (var s in strs) {
+            char[] chars = s.ToCharArray();
+            System.Array.Sort(chars);
+            string key = new string(chars);
+
+            if (!map.ContainsKey(key)) {
+                map[key] = new List<string>();
+            }
+            map[key].Add(s);
+        }
+
+        return map.Values.ToList();
+    }
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -285,9 +348,10 @@ for i from 1 to n-1:
 return nums
 ```
 
-### ✅ C++ Solution
-See [`running_sum.cpp`](running_sum.cpp)
+### ✅ C++ & C# Solutions
+See [`running_sum.cpp`](running_sum.cpp) | [`running_sum.cs`](running_sum.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -295,9 +359,20 @@ public:
         for (int i = 1; i < (int)nums.size(); i++) {
             nums[i] += nums[i - 1]; // accumulate prefix sum
         }
+}
+};
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public int[] RunningSum(int[] nums) {
+        for (int i = 1; i < nums.Length; i++) {
+            nums[i] += nums[i - 1];
+        }
         return nums;
     }
-};
+}
 ```
 
 ### 📊 Complexity Analysis
@@ -368,9 +443,10 @@ for i from n-1 to 0:
 return result
 ```
 
-### ✅ C++ Solution
-See [`product_except_self.cpp`](product_except_self.cpp)
+### ✅ C++ & C# Solutions
+See [`product_except_self.cpp`](product_except_self.cpp) | [`product_except_self.cs`](product_except_self.cs)
 
+**C++ Implementation**
 ```cpp
 class Solution {
 public:
@@ -392,9 +468,32 @@ public:
             suffix *= nums[i];
         }
 
+}
+};
+```
+
+**C# Implementation**
+```csharp
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        int n = nums.Length;
+        int[] result = new int[n];
+        
+        int prefix = 1;
+        for (int i = 0; i < n; i++) {
+            result[i] = prefix;
+            prefix *= nums[i];
+        }
+        
+        int suffix = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            result[i] *= suffix;
+            suffix *= nums[i];
+        }
+        
         return result;
     }
-};
+}
 ```
 
 ### 📊 Complexity Analysis
